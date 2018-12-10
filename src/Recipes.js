@@ -1,15 +1,7 @@
 import React, { Component } from 'react';
 import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
-
-const recipesQuery = gql`
-  query recipes($vegetarian: Boolean!) {
-    recipes(vegetarian: $vegetarian) {
-      id
-      title
-    }
-  }
-`;
+import recipesQuery from './recipesQuery';
 
 class Recipes extends Component {
   state = {
