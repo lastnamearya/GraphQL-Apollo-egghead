@@ -3,8 +3,8 @@ import gql from 'graphql-tag';
 import { Query } from 'react-apollo';
 
 const recipesQuery = gql`
-  {
-    recipes {
+  query recipes($vegetarian: Boolean!) {
+    recipes(vegetarian: $vegetarian) {
       id
       title
     }
@@ -14,7 +14,7 @@ const recipesQuery = gql`
 class Recipes extends Component {
   render() {
     return (
-      <Query query={recipesQuery}>
+      <Query query={recipesQuery} variables={{ vegetarian: true }}>
         {({ data, loading, error }) => {
           if (loading) return <p>Loading...</p>;
           if (error) return <p>Something went wrong.</p>;
