@@ -7,8 +7,34 @@ import './App.css';
 
 const resolvers = {
   Recipe: {
-    isStarred: () => {
-      return false;
+    isStarred: parent => {
+      const starredRecipes =
+        JSON.parse(localStorage.getItem('starredRecipes')) || [];
+      return starredRecipes.includes(parent.id);
+    }
+  },
+  Mutation: {
+    updateRecipeStarred: (_, variables) => {
+      const starredRecipes =
+        JSON.parse(localStorage.getItem('starredRecipes')) || [];
+
+      if (variables.isStarred) {
+        localStorage.setItem(
+          'starredRecipes',
+          JSON.stringify(starredRecipes.concat([variables.id]))
+        );
+      } else {
+        localStorage.setItem(
+          'starredRecipes',
+          JSON.stringify(
+            starredRecipes.filter(recipeId => recipeId !== variables.id)
+          )
+        );
+      }
+      return {
+        __typename: 'Recipe',
+        isStarred: variables.isStarred
+      };
     }
   }
 };
