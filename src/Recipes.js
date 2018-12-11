@@ -34,8 +34,13 @@ class Recipes extends Component {
 
             return (
               <ul>
-                {data.recipes.map(({ id, title }) => (
-                  <li key={id}>{title}</li>
+                {data.recipes.map(({ id, title, isStarred }) => (
+                  <li key={id}>
+                    {title}
+                    <span style={{ color: isStarred ? 'orange' : 'grey' }}>
+                      ★
+                    </span>
+                  </li>
                 ))}
               </ul>
             );
